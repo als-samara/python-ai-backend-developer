@@ -1,9 +1,9 @@
 clientes = []
-# cliente1 = {"nome": "Samara", "data de nascimento": "20/08/1997", "cpf": "46975938806", "endereço": "Rua: das Palmeiras, nro 103 - Jardim Prainha - São Paulo/SP"}
-# cliente2 = {"nome": "Soraya", "data de nascimento": "22/02/1995", "cpf": "78978978944", "endereço": "Rua: das Palmeiras, nro 103 - Jardim Prainha - São Paulo/SP"}
+# cliente1 = {"nome": "Samara", "data de nascimento": "20/08/1997", "cpf": "12345678990", "endereço": "Rua: das Palmeiras, nro 103 - Jardim Prainha - São Paulo/SP"}
+# cliente2 = {"nome": "Soraya", "data de nascimento": "20/08/1995", "cpf": "00022255587", "endereço": "Rua: das Palmeiras, nro 103 - Jardim Prainha - São Paulo/SP"}
 usuarios = []
-# conta1= {'agencia': '0001', 'numero': 1, 'usuario': {'Nome': 'Samara', 'CPF': '46975938806'}, 'saldo': 0, 'limite_por_saque': 500}
-# conta2= {'agencia': '0001', 'numero': 2, 'usuario': {'Nome': 'Soraya', 'CPF': '78978978944'}, 'saldo': 0, 'limite_por_saque': 500}
+# conta1= {'agencia': '0001', 'numero': 1, 'usuario': {'Nome': 'Samara', 'CPF': '12345678990'}, 'saldo': 0, 'limite_por_saque': 500}
+# conta2= {'agencia': '0001', 'numero': 2, 'usuario': {'Nome': 'Soraya', 'CPF': '00022255587'}, 'saldo': 0, 'limite_por_saque': 500}
 contas = []
 
 def cadastrar_cliente():
