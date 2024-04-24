@@ -1,5 +1,9 @@
 clientes = []
+# cliente1 = {"nome": "Samara", "data de nascimento": "20/08/1997", "cpf": "46975938806", "endereço": "Rua: das Palmeiras, nro 103 - Jardim Prainha - São Paulo/SP"}
+# cliente2 = {"nome": "Soraya", "data de nascimento": "22/02/1995", "cpf": "78978978944", "endereço": "Rua: das Palmeiras, nro 103 - Jardim Prainha - São Paulo/SP"}
 usuarios = []
+# conta1= {'agencia': '0001', 'numero': 1, 'usuario': {'Nome': 'Samara', 'CPF': '46975938806'}, 'saldo': 0, 'limite_por_saque': 500}
+# conta2= {'agencia': '0001', 'numero': 2, 'usuario': {'Nome': 'Soraya', 'CPF': '78978978944'}, 'saldo': 0, 'limite_por_saque': 500}
 contas = []
 
 def cadastrar_cliente():
@@ -41,6 +45,43 @@ def cadastrar_conta_corrente(numero, cpf_usuario):
         print("Usuário não encontrado")
         return
 
-# método de listar contas
-# método de listar contas por cpf
-# método de apagar conta
+def listar_contas():
+    if len(contas) > 0:
+        for conta in contas:
+            numero = conta["numero"]
+            print(f"Conta {numero}: {conta}")
+    else:
+        print("Nenhuma conta cadastrada")
+
+def listar_por_cpf(cpf):
+    if len(contas) > 0:
+        contas_usuario = []
+
+        for conta in contas:
+            numero = conta["numero"]
+            if conta["usuario"]["CPF"] == cpf:
+                contas_usuario.append(conta)
+
+        if len(contas_usuario) > 0:
+            for conta_user in contas_usuario:
+                print(f"Conta {numero}: {conta_user}")
+        else:
+            print("Não foram localizadas contas vinculadas ao usuário pesquisado")
+    else:
+        print("Nenhuma conta cadastrada")
+
+def deletar_conta(num_conta):
+    for conta in contas:
+        if conta["numero"] == num_conta:
+            opcao = 0
+            while opcao < 1 or opcao > 2:
+                opcao = int(input("Para confirmar digite 1 ou 2 para cancelar "))
+                if opcao == 1:
+                    contas.remove(conta)
+                    print("Conta excluída com sucesso.")
+                    return
+                elif opcao == 2:
+                    return
+            break
+    else:
+        print("Conta não encontrada")

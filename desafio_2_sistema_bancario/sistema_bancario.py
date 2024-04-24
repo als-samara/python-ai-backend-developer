@@ -1,17 +1,17 @@
-import time, metodos_bancarios, metodos_crud
+import metodos_bancarios, metodos_crud
 
 menu = """
 
 *********** Escolha uma opção: ***********
 
                [1] Depósito
-               [2] Saque*
+               [2] Saque
                [3] Extrato
                [4] Cadastrar Cliente
                [5] Cadastrar Conta Corrente
-               [6] Listar Todas as Contas***
-               [7] Listar Contas do Usuário***
-               [8] Deletar Conta***
+               [6] Listar Todas as Contas
+               [7] Listar Contas do Usuário
+               [8] Deletar Conta
                [S] Sair
 
 ******************************************
@@ -19,13 +19,9 @@ menu = """
 => """
 
 saldo = 0
-limite_saque = 500
 extrato = ["EXTRATO BANCÁRIO\n"]
-saques_dia_atual = 0
-LIMITE_SAQUES = 3
 clientes = []
 numero = 0
-
 
 
 while True:
@@ -40,38 +36,24 @@ while True:
 
         input("Pressione qualquer tecla para voltar ao Menu")
 
-    if option == '2':
-        saque = input("Digite o valor para saque: ")
+    elif option == '2':
         try:
-            if int(saque) <= saldo and int(saque) <= limite_saque:
-                saques_dia_atual = sum(1 for operacao in extrato if
-                                       f"Saque" in operacao and f"{time.localtime().tm_year}/{time.localtime().tm_mon}/{time.localtime().tm_mday}" in operacao)
-                if saques_dia_atual >= LIMITE_SAQUES:
-                    print("Você atingiu o limite de saques diário.")
-                else:
-                    saldo -= int(saque)
-                    hora_saque = time.localtime()
-                    operacao = f"Saque | Valor: R${int(saque): .2f} | Data: {hora_saque.tm_year}/{hora_saque.tm_mon}/{hora_saque.tm_mday}"
-                    extrato.append(operacao)
-            else:
-                if int(saque) > saldo:
-                    print("Você não possui saldo suficiente para realizar essa operação.")
-                else:
-                    print("Valor fora do seu limite por saque. Consulte seu gerente ou app do banco para mais informações.")
+            saque = int(input("Digite o valor para saque: "))
+            saldo = metodos_bancarios.saque(saldo=saldo, valor=saque, extrato=extrato, LIMITE_SAQUES = 3, limite_por_saque = 500)
         except ValueError:
             print("Digite um valor válido")
         input("Pressione qualquer tecla para voltar ao Menu")
 
-    if option == '3':
+    elif option == '3':
         metodos_bancarios.imprimir_extrato(extrato=extrato)
         print(f"\nSaldo atual: {saldo: .2f}\n")
         input("Pressione qualquer tecla para voltar ao Menu")
 
-    if option == '4':
+    elif option == '4':
         metodos_crud.cadastrar_cliente()
         input("Pressione qualquer tecla para voltar ao Menu")
 
-    if option == '5':
+    elif option == '5':
         numero_conta = numero+1
         cpf = input("Para cadastrar a conta, digite o CPF do usuário: ")
         metodos_crud.cadastrar_conta_corrente(numero_conta, cpf)
@@ -79,5 +61,26 @@ while True:
 
         input("Pressione qualquer tecla para voltar ao Menu")
 
-    if option.upper() == 'S':
+    elif option == '6':
+        metodos_crud.listar_contas()
+        input("Pressione qualquer tecla para voltar ao Menu")
+
+    elif option == '7':
+        cpf_digitado = input("Digite o CPF do usuário (apenas números): ")
+        metodos_crud.listar_por_cpf(cpf_digitado)
+        input("Pressione qualquer tecla para voltar ao Menu")
+
+    elif option == '8':
+        try:
+            numero = int(input("Digite o número da conta a ser apagada: "))
+            metodos_crud.deletar_conta(numero)
+        except ValueError:
+            print("Digite apenas números")
+        finally:
+            input("Pressione qualquer tecla para voltar ao Menu")
+
+    elif option.upper() == 'S':
         break
+
+    else:
+        input("Opção inválida, pressione qualquer tecla para voltar ao Menu")
