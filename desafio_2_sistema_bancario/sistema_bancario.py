@@ -1,13 +1,18 @@
-import time
+import time, metodos_bancarios, metodos_crud
 
 menu = """
 
 *********** Escolha uma opção: ***********
 
                [1] Depósito
-               [2] Saque
+               [2] Saque*
                [3] Extrato
-               [4] Sair
+               [4] Cadastrar Cliente
+               [5] Cadastrar Conta Corrente
+               [6] Listar Todas as Contas***
+               [7] Listar Contas do Usuário***
+               [8] Deletar Conta***
+               [S] Sair
 
 ******************************************
 
@@ -18,19 +23,21 @@ limite_saque = 500
 extrato = ["EXTRATO BANCÁRIO\n"]
 saques_dia_atual = 0
 LIMITE_SAQUES = 3
+clientes = []
+numero = 0
+
+
 
 while True:
     option = input(menu)
 
     if option == '1':
         try:
-            deposito = input("Digite o valor do depósito: ")
-            saldo += int(deposito)
-            hora_deposito = time.localtime()
-            operacao = f"Depósito | Valor: R${int(deposito): .2f} | Data: {hora_deposito.tm_year}/{hora_deposito.tm_mon}/{hora_deposito.tm_mday}"
-            extrato.append(operacao)
-        except ValueError:
+            deposito = int(input("Digite o valor do depósito: "))
+            saldo = metodos_bancarios.deposito(deposito, saldo, extrato)
+        except:
             print("Digite um valor válido")
+
         input("Pressione qualquer tecla para voltar ao Menu")
 
     if option == '2':
@@ -47,7 +54,7 @@ while True:
                     operacao = f"Saque | Valor: R${int(saque): .2f} | Data: {hora_saque.tm_year}/{hora_saque.tm_mon}/{hora_saque.tm_mday}"
                     extrato.append(operacao)
             else:
-                if int(saque) < saldo:
+                if int(saque) > saldo:
                     print("Você não possui saldo suficiente para realizar essa operação.")
                 else:
                     print("Valor fora do seu limite por saque. Consulte seu gerente ou app do banco para mais informações.")
@@ -56,9 +63,21 @@ while True:
         input("Pressione qualquer tecla para voltar ao Menu")
 
     if option == '3':
-        print('\n'.join(map(str, extrato)))
-        print(f"\nSaldo atual: {saldo:.2f}\n")
+        metodos_bancarios.imprimir_extrato(extrato=extrato)
+        print(f"\nSaldo atual: {saldo: .2f}\n")
         input("Pressione qualquer tecla para voltar ao Menu")
 
     if option == '4':
+        metodos_crud.cadastrar_cliente()
+        input("Pressione qualquer tecla para voltar ao Menu")
+
+    if option == '5':
+        numero_conta = numero+1
+        cpf = input("Para cadastrar a conta, digite o CPF do usuário: ")
+        metodos_crud.cadastrar_conta_corrente(numero_conta, cpf)
+        numero += 1
+
+        input("Pressione qualquer tecla para voltar ao Menu")
+
+    if option.upper() == 'S':
         break
